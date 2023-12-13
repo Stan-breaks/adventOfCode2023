@@ -4,7 +4,7 @@ from word2number import w2n
 
 
 def extractNumbers(text):
-    matches = re.findall("\d|zero|one|two|three|four|five|six|seven|eight|nine", text)
+    matches = re.findall("\d|one|two|three|four|five|six|seven|eight|nine", text)
     numbers = []
     for match in matches:
         try:
