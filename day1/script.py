@@ -4,7 +4,7 @@ from word2number import w2n
 
 
 def extractNumbers(text):
-    matches = re.findall('\d+|zero|one|two|three|four|five|six|seven|eight|nine`', text)
+    matches = re.findall("\d|zero|one|two|three|four|five|six|seven|eight|nine", text)
     numbers = []
     for match in matches:
         try:
@@ -13,14 +13,17 @@ def extractNumbers(text):
         except ValueError:
             if match.isdigit():
                 numbers.append(int(match))
-    return int(str(numbers[0])+str(numbers[-1]))
+    if numbers:
+        return int(str(numbers[0]) + str(numbers[-1]))
+    return 0
 
 
 def readFile(file):
     totalSum = 0
-    with open(file, 'r') as f:
+    with open(file, "r") as f:
         for line in f:
             num = extractNumbers(line)
+            print(num)
             totalSum += num
     return totalSum
 
