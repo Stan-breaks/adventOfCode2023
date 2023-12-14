@@ -19,13 +19,10 @@ Each solution is a standalone script. To run a solution, navigate to the appropr
 I'll update this section as I progress through the challenge.
 
 | Day | Part One | Part Two |
-|---|:---:|:---:|
-| 1 | :star: | |
-| 2 | | |
-| 3 | | |
-| ... | | |
-| 25 | | |
-
-
-
+| --- | :------: | :------: |
+| 1   |  :star:  |  :star:  |
+| 2   |          |          |
+| 3   |          |          |
+| ... |          |          |
+| 25  |          |          |
 

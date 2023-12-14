@@ -1,18 +1,25 @@
 import sys
-import re
-from word2number import w2n
 
 
 def extractNumbers(text):
-    matches = re.findall("\d|one|two|three|four|five|six|seven|eight|nine", text)
+    wordNums = [
+        "one",
+        "two",
+        "three",
+        "four",
+        "five",
+        "six",
+        "seven",
+        "eight",
+        "nine",
+    ]
     numbers = []
-    for match in matches:
-        try:
-            number = w2n.word_to_num(match)
-            numbers.append(number)
-        except ValueError:
-            if match.isdigit():
-                numbers.append(int(match))
+    for i, c in enumerate(text):
+        if c.isdigit():
+            numbers.append(c)
+        for d, val in enumerate(wordNums):
+            if text[i:].startswith(val):
+                numbers.append(d + 1)
     if numbers:
         return int(str(numbers[0]) + str(numbers[-1]))
     return 0
@@ -23,8 +30,8 @@ def readFile(file):
     with open(file, "r") as f:
         for line in f:
             num = extractNumbers(line)
-            print(num)
-            totalSum += num
+            if num:
+                totalSum += num
     return totalSum
 
 
