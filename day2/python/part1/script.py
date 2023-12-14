@@ -9,7 +9,7 @@ def determinePossibleGames(text):
         "blue": 14,
     }
     correct = 1
-    sets = text.split(';')
+    sets = text.split(";")
     for set in sets:
         game = {}
         matches = re.findall("[0-9]+ [a-zA-Z]+", set)
@@ -40,7 +40,6 @@ def sumOfIds(arr):
     sum = 0
     for item in arr:
         sum += int(item)
-        print(item)
     return sum
 
 
