@@ -23,7 +23,16 @@ def readFile(file):
                         while cc > 0 and lines[cr][cc - 1].isdigit():
                             cc -= 1
                         cs.add((cr, cc))
+
     print(cs)
+    nums = []
+    for r, c in cs:
+        string = ""
+        while c < len(lines[r]) and lines[r][c].isdigit():
+            string += lines[r][c]
+            c += 1
+        nums.append(int(string))
+    print(sum(nums))
 
 
 if __name__ == "__main__":
