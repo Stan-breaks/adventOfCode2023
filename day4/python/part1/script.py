@@ -5,18 +5,23 @@ def readFile(file):
     with open(file, "r") as f:
         points = 0
         for line in f:
-            winningCards = line.split(":")[1].split("|")[0].strip().split(" ")
-            cards = line.split(":")[1].split("|")[1].strip().split(" ")
+            winningCards = [
+                x
+                for x in line.split(":")[1].split("|")[0].strip().split(" ")
+                if x != ""
+            ]
+            cards = [
+                x
+                for x in line.split(":")[1].split("|")[1].strip().split(" ")
+                if x != ""
+            ]
             count = 0
             for card in cards:
                 if card in winningCards:
-                    if count > 0:
-                        count *= 2
-                    else:
-                        count += 1
-            print(count)
-            points += count
-        print(points)
+                    count += 1
+            if count > 0:
+                points += 2 ** (count - 1)
+    print(points)
 
 
 if __name__ == "__main__":
