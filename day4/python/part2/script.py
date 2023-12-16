@@ -4,6 +4,9 @@ import sys
 def readFile(file):
     with open(file, "r") as f:
         total = 0
+        data = f.read()
+        lines = data.split("\n")
+        print(lines)
         for line in f:
             winningCards = [
                 x
@@ -20,8 +23,7 @@ def readFile(file):
                 if card in winningCards:
                     count += 1
             for match in range(count):
-                cards += card[match - 1]
-                winningCards += winningCards[match - 1]
+                f += f[match - 1]
             total += count
         print(total)
 
