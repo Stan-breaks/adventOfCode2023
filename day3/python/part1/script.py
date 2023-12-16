@@ -23,8 +23,6 @@ def readFile(file):
                         while cc > 0 and lines[cr][cc - 1].isdigit():
                             cc -= 1
                         cs.add((cr, cc))
-
-    print(cs)
     nums = []
     for r, c in cs:
         string = ""
