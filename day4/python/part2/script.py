@@ -3,12 +3,11 @@ import sys
 
 def readFile(file):
     with open(file, "r") as f:
-        total = 0
         data = f.read()
-        lines = data.split("\n")
-        print(lines)
-        for line in f:
-            winningCards = [
+        lines = data.strip().split("\n")
+        for line in lines:
+            count = 0
+            winCards = [
                 x
                 for x in line.split(":")[1].split("|")[0].strip().split(" ")
                 if x != ""
@@ -18,14 +17,14 @@ def readFile(file):
                 for x in line.split(":")[1].split("|")[1].strip().split(" ")
                 if x != ""
             ]
-            count = 0
             for card in cards:
-                if card in winningCards:
+                if card in winCards:
                     count += 1
-            for match in range(count):
-                f += f[match - 1]
-            total += count
-        print(total)
+            cardArr = [x for x in line.split(":")[0].split(" ") if x != ""]
+            cardNum = int(cardArr[1])
+            for i in range(count):
+                lines.append(lines[cardNum + i])
+        print(len(lines))
 
 
 if __name__ == "__main__":
