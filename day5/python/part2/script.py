@@ -2,23 +2,30 @@ import sys
 
 
 def readFile(file):
-    with open(file, "r") as f:  # Potentially risky line (file opening)
-        data = f.read()
-        cat = data.split("\n\n")
-        seedline = [int(x) for x in cat[0].split(":")[1].strip().split(" ")]
-        maps = [val.split(":")[1].strip().split("\n") for val in cat[1:]]
-        seeds = []
-        for j in range(0, len(seedline), 2):
-            seeds.append((seedline[j], seedline[j] + seedline[j + 1]))
-        for map in maps:
-            ranges = []
-            for i in map:
-                d, s, r = [int(x) for x in i.split(" ")]
-                ranges.append((d, s, r))
+    with open(file) as f:
+        lines = f.read()
+        seedsRange = [
+            int(x) for x in lines.split("\n\n")[0].split(":")[1].strip().split(" ")
+        ]
+        allMaps = [
+            [
+                [int(j) for j in i.split(" ")]
+                for i in x.split("\n")
+                if i != x.split("\n")[0] and i != ""
+            ]
+            for x in lines.split("\n\n")
+            if x != lines.split("\n\n")[0]
+        ]
+        seeds = [
+            (x, x + seedsRange[i + 1])
+            for i, x in enumerate(seedsRange)
+            if i % 2 == 0 or i == 0
+        ]
+        for maps in allMaps:
             new = []
             while len(seeds) > 0:
                 start, end = seeds.pop()
-                for d, s, r in ranges:
+                for d, s, r in maps:
                     os = max(start, s)
                     oe = min(end, s + r)
                     if os < oe:
@@ -35,7 +42,5 @@ def readFile(file):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python script.py <filename>")
-        sys.exit(1)
     readFile(sys.argv[1])
+    exit(0)
