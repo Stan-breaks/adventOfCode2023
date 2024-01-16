@@ -1,14 +1,6 @@
 import sys
 
 
-def mapper(num, map):
-    for i in map:
-        d, s, r = [int(x) for x in i.split(" ")]
-        if num > s and num < s + r:
-            return d + (num - s)
-    return num
-
-
 def readFile(file):
     with open(file, "r") as f:  # Potentially risky line (file opening)
         data = f.read()
