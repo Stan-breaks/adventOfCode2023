@@ -1,31 +1,45 @@
 import sys
 
 
-def mapper(seed, map):
+def mapper(num, map):
     for i in map:
-        s, d, r = [int(x) for x in i.split()]
-        if d <= seed < d + r:
-            return s + (seed - d)
-    return seed
+        d, s, r = [int(x) for x in i.split(" ")]
+        if num > s and num < s + r:
+            return d + (num - s)
+    return num
 
 
 def readFile(file):
     with open(file, "r") as f:  # Potentially risky line (file opening)
         data = f.read()
         cat = data.split("\n\n")
-        seeds = [int(x) for x in cat[0].split(":")[1].strip().split(" ")]
+        seedline = [int(x) for x in cat[0].split(":")[1].strip().split(" ")]
         maps = [val.split(":")[1].strip().split("\n") for val in cat[1:]]
-        min = 999
-        for j in range(len(seeds)):
-            if j % 2 == 0 or j == 0:
-                start = seeds[j]
-                end = seeds[j + 1] + seeds[j]
-                for i in range(start, end):
-                    for map in maps:
-                        i = mapper(i, map)
-                    if i < min:
-                        min = i
-        print(min)
+        seeds = []
+        for j in range(0, len(seedline), 2):
+            seeds.append((seedline[j], seedline[j] + seedline[j + 1]))
+        for map in maps:
+            ranges = []
+            for i in map:
+                d, s, r = [int(x) for x in i.split(" ")]
+                ranges.append((d, s, r))
+            new = []
+            while len(seeds) > 0:
+                start, end = seeds.pop()
+                for d, s, r in ranges:
+                    os = max(start, s)
+                    oe = min(end, s + r)
+                    if os < oe:
+                        new.append((os - s + d, oe - s + d))
+                        if os > start:
+                            seeds.append((start, os))
+                        if oe < end:
+                            seeds.append((oe, end))
+                        break
+                else:
+                    new.append((start, end))
+            seeds = new
+        print(min(seeds)[0])
 
 
 if __name__ == "__main__":
